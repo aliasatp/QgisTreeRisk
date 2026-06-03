@@ -1,4 +1,4 @@
-# Valutatore della vulnerabilità e del rischio arboreo
+# QgisTreeRisk Valutatozione del bersaglio/vulnerabilità e del rischio arboreo
 Progetto su base QGIS del metodo Areté
 STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO – NON OPERATIVO
 I risultati prodotti da questo simulatore non costituiscono e non sostituiscono una perizia o una valutazione tecnica professionale, un’indagine visiva diretta né alcun documento a valenza legale, assicurativa o amministrativa. L’uso in contesti operativi è escluso.
