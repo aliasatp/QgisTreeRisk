@@ -7,6 +7,7 @@ Plugin QGIS open source per la stima del rischio di cedimento arboreo su grandi 
 > ⚠️ **STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO — NON OPERATIVO.**  
 > I risultati non costituiscono perizia professionale né hanno valenza legale o assicurativa.  
 > Per valutazioni ufficiali consultare un tecnico abilitato: [protocolloarete.it](http://www.protocolloarete.it)
+> Guida online:  [manuale](https://aliasatp.github.io/QgisTreeRisk/)
 
 ---
 
