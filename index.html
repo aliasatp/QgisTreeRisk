@@ -279,9 +279,9 @@ footer a{color:#81C784}
 <div class="wrapper">
   <h2><span class="ico">⚡</span> Funzionalità principali</h2>
   <div class="cards">
-    <div class="card"><div class="card-ico">📍</div><h4>Stima bersaglio OSM</h4><p>Interroga Overpass API per strade, edifici, aree e POI nell'area di caduta di ogni albero.</p></div>
-    <div class="card"><div class="card-ico">🗺️</div><h4>Carta Vulnerabilità</h4><p>Layer poligonale personalizzabile con parametri reali di frequentazione. Supporto metodo geometrico SPOT/SDAN.</p></div>
-    <div class="card"><div class="card-ico">🌿</div><h4>Classe di Impulso (CF)</h4><p>Calcolo automatico dell'energia di cedimento per albero intero e branca pericolosa.</p></div>
+    <div class="card"><div class="card-ico">📍</div><h4>Stima bersaglio OSM</h4><p>Interroga OSM tramite Overpass API. Considera strade, edifici, aree e POI nell'area di caduta di ogni albero.</p></div>
+    <div class="card"><div class="card-ico">🗺️</div><h4>Carta Vulnerabilità</h4><p>Crea Layer poligonale personalizzabile con parametri reali di frequentazione. Supporto metodo geometrico SPOT/SDAN.</p></div>
+    <div class="card"><div class="card-ico">🌿</div><h4>Classe di Impulso (CF)</h4><p>Calcolo automatico Impulso (energia di cedimento) per albero intero e branca pericolosa.</p></div>
     <div class="card"><div class="card-ico">📊</div><h4>Rischio per settore</h4><p>Radici, colletto, fusto, branche — giudizio ordinario VRA e speditivo triage per ciascun settore.</p></div>
     <div class="card"><div class="card-ico">🎯</div><h4>Layer SPOT</h4><p>Poligoni area di potenziale caduta (raggio = h albero) con stile cromatico Areté.</p></div>
     <div class="card"><div class="card-ico">📐</div><h4>Output in UTM</h4><p>Layer VRA e CV prodotti automaticamente nel CRS UTM coerente con il layer sorgente.</p></div>
@@ -428,7 +428,7 @@ footer a{color:#81C784}
   <h3>Perché non basta il tempo di occupazione flat?</h3>
   <p>Impostare <em>"8 ore/giorno di occupazione"</em> su un parco da 10.000 m² è scorretto: quelle 8 ore si distribuiscono sull'intera area, mentre l'albero può cadere solo nella sua SPOT (raggio = h). Il metodo geometrico corregge questo errore proporzionando l'occupazione all'area reale di influenza. Riferimento: Sani L., 2020 — <em>Valutazione e gestione del rischio arboreo</em>, pag. 157–165; calcolatore targetk.php (ALIAS ATP).</p>
 
-  <div class="method-grid">
+
     <div>
       <div class="method-formulas">
         <h4>📌 Metodo FLAT <span class="chip">cv_metodo = flat</span></h4>
@@ -460,7 +460,7 @@ footer a{color:#81C784}
     <figure class="img-figure">
       <img src="esempio.jpg">  <figcaption>Schema SPOT / SDAN / Superficie frequentata. Fonte: ALIAS ATP — targetk.php</figcaption>
     </figure>
-  </div>
+  
 
   <!-- ESEMPIO NUMERICO -->
   <div class="calc-example">
