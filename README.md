@@ -3,11 +3,12 @@
 **Valutazione del Rischio Arboreo secondo il Protocollo Areté® v4.0**
 
 Plugin QGIS open source per la stima del rischio di cedimento arboreo su grandi dataset. Calcola la classe di rischio per i quattro settori analitici (radici, colletto, fusto, branche) con giudizio ordinario VRA e speditiva triage.
+> Guida online:  [manuale](https://aliasatp.github.io/QgisTreeRisk/)
 
 > ⚠️ **STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO — NON OPERATIVO.**  
 > I risultati non costituiscono perizia professionale né hanno valenza legale o assicurativa.  
 > Per valutazioni ufficiali consultare un tecnico abilitato: [protocolloarete.it](http://www.protocolloarete.it).
-> Guida online:  [manuale](https://aliasatp.github.io/QgisTreeRisk/)
+
 
 ---
 
