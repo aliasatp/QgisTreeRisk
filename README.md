@@ -15,8 +15,8 @@ Plugin QGIS open source per la stima del rischio di cedimento arboreo su grandi 
 | | Funzionalità | Descrizione |
 |---|---|---|
 | 🗺️ | **Quadro conoscitivo pianificatorio** | Elabora interi patrimoni arborei con stima automatica del bersaglio da OpenStreetMap. Utile per definire priorità di intervento in fase di piano del verde. |
-| 🗄️ | **Elaborazione massiva di dataset** | Porta il tuo inventario arboreo (CSV, Shapefile, GeoPackage), mappa i campi biometrici e ottieni livello di rischio, giudizio ordinario e speditiva triage per ogni albero. |
-| 📐 | **Carta della Vulnerabilità probabilistica** | Il metodo SPOT/SDAN proporziona l'occupazione stabile all'area di caduta reale — parchi e cortili ricevono un bersaglio geometricamente corretto, non una stima piatta sull'intera superficie. |
+| 🗄️ | **Elaborazione massiva di dataset** | Importa il tuo inventario arboreo (CSV, Shapefile, GeoPackage), mappa i campi biometrici e il POF e ottieni livello di rischio, giudizio ordinario e triage per ogni albero utilizzando come fonte per definire la classe dI bersaglio tre possibili sorgenti: dati presenti nel tuo inventario, derivazione della CV (carta vulnerabilità) eleaborata a partire da OSM, derivazione da tua CV. |
+| 📐 | **Carta della Vulnerabilità probabilistica** | Layer poligonale personalizzabile con parametri reali di frequentazione. Supporto metodo geometrico SPOT/SDAN: Il metodo SPOT/SDAN proporziona l'occupazione stabile all'area di caduta reale — parchi e cortili ricevono un bersaglio geometricamente corretto, non una stima piatta sull'intera superficie. |
 | 👥 | **Fattore k per aree turistiche** | 9 fasce demografiche (XXS <500 ab. → XXL >2M ab.) con baseline a 30.000–80.000 ab. Il campo `dz_k_extra` scala il bersaglio per turismo, pendolari ed eventi stagionali. |
 
 ---
