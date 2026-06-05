@@ -14,7 +14,7 @@ Plugin QGIS open source per la stima del rischio di cedimento arboreo su grandi 
 
 | | Funzionalità | Descrizione |
 |---|---|---|
-| 🗺️ | **Quadro conoscitivo pianificatorio** | Elabora interi patrimoni arborei con stima automatica del bersaglio da OpenStreetMap. Utile per definire priorità di intervento in fase di piano del verde. |
+| 🗺️ | **Quadro conoscitivo pianificatorio** | Elabora interi patrimoni arborei con stima automatica del bersaglio da OpenStreetMap (tramite Overpass API). Utile per definire priorità di intervento in fase di piano del verde. |
 | 🗄️ | **Elaborazione massiva di dataset** | Importa il tuo inventario arboreo (CSV, Shapefile, GeoPackage), mappa i campi biometrici e il POF e ottieni livello di rischio, giudizio ordinario e triage per ogni albero utilizzando come fonte per definire la classe di bersaglio tre possibili sorgenti: dati presenti nel tuo inventario, derivazione della CV (carta vulnerabilità) eleaborata a partire da OSM, derivazione da tua CV. |
 | 📐 | **Carta della Vulnerabilità probabilistica** | Layer poligonale personalizzabile con parametri reali di frequentazione. Supporto metodo geometrico SPOT/SDAN: Il metodo SPOT/SDAN proporziona l'occupazione stabile all'area di caduta reale — parchi e cortili ricevono un bersaglio geometricamente corretto, non una stima piatta sull'intera superficie. |
 | 👥 | **Fattore k per aree turistiche/pendolari** | La CV può essere zonizzata in funzione di fattori quali: affluenza turistica, pendolari, eventi culturali/sportivi che vanno a sommarsi col parametro demografico. Sono disponibili 9 fasce demografiche (XXS <500 ab. → XXL >2M ab.) con baseline a 30.000–80.000 ab. Il campo `dz_k_extra` scala il bersaglio per turismo, pendolari ed eventi stagionali. |
@@ -42,7 +42,7 @@ Il plugin aggiunge il gruppo **QgisTreeRisk** nella Cassetta degli Strumenti di 
 |---|---|
 | `Valutazione Rischio Arboreo` | Dialog interattivo principale — calcola il rischio per ogni albero del layer |
 | `Crea Carta Vulnerabilità` | Genera un GeoPackage vuoto con schema standard e form attributi preconfigurato |
-| `Genera CV da OSM` | Scarica strade, edifici, landuse e POI da OpenStreetMap e precompila la CV |
+| `Genera CV da OSM` | (tramite Overpass API) Scarica strade, edifici, landuse e POI da OpenStreetMap e precompila la CV |
 | `Crea layer Comuni` | Genera il layer poligonale per i confini comunali con campo `pop_res` |
 | `Crea layer Zonizzazione` | Genera il layer poligonale per la zonizzazione demografica (`dz_k`, `dz_k_extra`) |
 
