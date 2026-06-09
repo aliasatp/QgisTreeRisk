@@ -73,12 +73,14 @@ Il layer `VRA_Arete_v4` (punti) e il layer `SPOT_*` (poligoni, raggio = altezza 
 Per aree estese (parchi, cortili, pertinenze) il metodo flat sovrastima il bersaglio. Il plugin implementa il calcolo geometrico che proporziona l'occupazione all'area di influenza reale dell'albero:
 
 ```
-SPOT     = h² × π                       ← area di potenziale caduta (r = altezza)
-SDAN     = ((h + d_chioma) / 2)² × π   ← ingombro albero a terra
-ore_annue = cv_per_giorno × cv_giorni_anno × cv_ore_occ
-ore_spot  = ore_annue × (SDAN / sup) × min(SPOT, sup) / SPOT
-ore_eff   = ore_spot / 365              ← ore/giorno equivalenti nella SPOT
-B_occ     = classe_B_occupazione(ore_eff)
+SPOT_netta = (15² × π) × 1.00   = 706.86 m²
+SDAN       = (15/2) × (8/2) × π = 7.5 × 4 × π = 94.25 m²
+r          = 94.25 / 706.86     = 0.1334
+hpy        = 400 × 210 × 2      = 168.000
+k          = 168.000 / 8760     = 19.178
+pmqspot    = 19.178 / 2800      = 0.006849
+pspot      = 0.006849 × 706.86 = 4.842
+psdan      = 4.842 × 0.1334    = 0.6459  →  64.59%  →  classe 1
 ```
 
 ---
