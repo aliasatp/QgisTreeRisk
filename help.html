@@ -3,452 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QgisTreeRisk — Valutazione Rischio Arboreo · ALIAS ATP</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<title>Help — Genera Carta Vulnerabilità da OSM · QgisTreeRisk</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --green:    #2E7D32;
-  --green-l:  #43A047;
-  --green-xl: #E8F5E9;
-  --blue:     #1F4E79;
-  --blue-m:   #2E75B6;
-  --blue-l:   #D6E4F0;
-  --amber:    #F57F17;
-  --amber-l:  #FFF8E1;
-  --red:      #B71C1C;
-  --bg:       #FAFAF8;
-  --surface:  #FFFFFF;
-  --text:     #1A1A1A;
-  --muted:    #5A5A5A;
-  --border:   #E0E0E0;
-  --radius:   8px;
-  --shadow:   0 2px 12px rgba(0,0,0,.08);
-  --shadow-lg:0 8px 32px rgba(0,0,0,.12);
+  --green:#2E7D32; --green-xl:#E8F5E9;
+  --blue:#1F4E79; --blue-m:#2E75B6; --blue-l:#D6E4F0;
+  --amber:#F57F17; --amber-l:#FFF8E1;
+  --bg:#FAFAF8; --surface:#FFF; --text:#1A1A1A; --muted:#5A5A5A;
+  --border:#E0E0E0; --radius:8px;
+  --shadow:0 2px 12px rgba(0,0,0,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:16px}
 a{color:var(--blue-m);text-decoration:none}
 a:hover{text-decoration:underline}
-code,pre{font-family:'Space Mono',monospace;font-size:.85em}
-
-/* ── HERO ─────────────────────────────────────────────────── */
-.hero{
-  background:linear-gradient(135deg,#0d2b4d 0%,#1F4E79 50%,#1a3a1a 100%);
-  color:#fff;padding:72px 24px 64px;text-align:center;position:relative;overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,.04)'/%3E%3C/svg%3E");
-}
-.hero-tree{font-size:72px;line-height:1;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(67,160,71,.6))}
-.hero h1{font-family:'Lato',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.5px;margin-bottom:8px}
-.hero h1 span{color:#81C784}
-.hero-sub{font-size:1.15rem;font-weight:300;opacity:.85;max-width:600px;margin:0 auto 28px}
-.badge-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.badge-gpl{background:rgba(46,125,50,.3);border:1px solid #81C784;color:#C8E6C9}
-.badge-cc{background:rgba(245,127,23,.25);border:1px solid #FFB300;color:#FFE082}
-.badge-qgis{background:rgba(30,136,229,.25);border:1px solid #64B5F6;color:#BBDEFB}
-.badge-ver{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);color:#fff}
-.hero-warn{
-  max-width:700px;margin:28px auto 0;
-  background:rgba(183,28,28,.25);border:1px solid rgba(239,83,80,.5);
-  border-radius:var(--radius);padding:12px 18px;font-size:.88rem;
-  color:#FFCDD2;line-height:1.5;
-}
-
-/* ── LAYOUT ───────────────────────────────────────────────── */
-.wrapper{max-width:960px;margin:0 auto;padding:0 24px}
-.section{padding:56px 0 48px}
+code{font-family:'Space Mono',monospace;font-size:.85em;background:var(--blue-l);color:var(--blue);padding:1px 6px;border-radius:4px}
+.wrapper{max-width:860px;margin:0 auto;padding:0 24px}
+.hero{background:linear-gradient(135deg,#0d2b4d,#1F4E79);color:#fff;padding:48px 24px;text-align:center}
+.hero h1{font-weight:900;font-size:1.9rem;margin-bottom:8px}
+.hero p{color:#E8F0F8;max-width:560px;margin:0 auto;font-weight:400}
+.section{padding:44px 0 36px}
 .section+.section{border-top:1px solid var(--border)}
-
-/* ── HEADINGS ─────────────────────────────────────────────── */
-h2{font-family:'Lato',sans-serif;font-weight:900;font-size:1.75rem;color:var(--blue);
-   margin-bottom:20px;display:flex;align-items:center;gap:12px}
-h2 .ico{font-size:1.5rem}
-h3{font-weight:700;font-size:1.1rem;color:var(--blue);margin:24px 0 10px}
-p{margin-bottom:14px;color:var(--muted)}
-p:last-child{margin-bottom:0}
+h2{font-weight:900;font-size:1.45rem;color:var(--blue);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+h3{font-weight:700;font-size:1.05rem;color:var(--blue);margin:22px 0 8px}
+p{margin-bottom:12px;color:var(--muted)}
 strong{color:var(--text)}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin-bottom:6px;color:var(--muted)}
+li strong{color:var(--text)}
 
-/* ── CARDS ────────────────────────────────────────────────── */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-      padding:20px;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
-.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.card-ico{font-size:2rem;margin-bottom:12px}
-.card h4{font-weight:700;color:var(--text);margin-bottom:6px;font-size:.95rem}
-.card p{font-size:.85rem;margin:0}
+.flow{display:flex;flex-direction:column;gap:0;margin:24px 0}
+.flow-step{display:flex;gap:16px;align-items:flex-start}
+.flow-num{min-width:36px;height:36px;border-radius:50%;background:var(--blue);color:#FFFFFF;font-size:1rem;
+  font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'Space Mono',monospace;z-index:1}
+.flow-body{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;box-shadow:var(--shadow);margin-bottom:8px}
+.flow-body strong{display:block;margin-bottom:4px}
+.flow-body p{font-size:.9rem;margin:0}
+.flow-connector{width:2px;height:14px;background:var(--blue-m);margin-left:17px;opacity:.4}
 
-/* ── INSTALL STEPS ────────────────────────────────────────── */
-.steps{counter-reset:step;display:flex;flex-direction:column;gap:14px;margin-top:20px}
-.step{display:flex;gap:16px;align-items:flex-start;
-      background:var(--surface);border:1px solid var(--border);
-      border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)}
-.step-num{
-  counter-increment:step;
-  min-width:36px;height:36px;border-radius:50%;
-  background:var(--blue);color:#fff;font-weight:700;font-size:.9rem;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  font-family:'Space Mono',monospace;
-}
-.step-num::before{content:counter(step)}
-.step-body{flex:1}
-.step-body strong{display:block;margin-bottom:4px;color:var(--text)}
-.step-body p{font-size:.9rem;margin:0}
-code.path{background:var(--blue-l);color:var(--blue);padding:2px 7px;border-radius:4px;font-size:.82em}
+table{width:100%;border-collapse:collapse;font-size:.85rem;margin:14px 0;background:var(--surface);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+th{background:var(--blue);color:#FFFFFF;padding:9px 12px;text-align:left;font-weight:900;font-size:.82rem;letter-spacing:.3px}
+td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:700;color:var(--text)}
+.k-baseline{background:var(--green-xl)}
+.k-baseline td{color:#1B5E20;font-weight:700}
 
-/* ── LICENSE BOX ──────────────────────────────────────────── */
-.lic-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
-@media(max-width:600px){.lic-grid{grid-template-columns:1fr}}
-.lic-box{border-radius:var(--radius);padding:20px 22px;border-left:4px solid}
-.lic-plugin{background:#E8F5E9;border-color:var(--green);color:#1B5E20}
-.lic-prot{background:var(--amber-l);border-color:var(--amber);color:#4E2D00}
-.lic-box h4{font-weight:700;margin-bottom:8px;font-size:.95rem}
-.lic-box p{font-size:.85rem;margin:0;line-height:1.6}
-.lic-box code{background:rgba(0,0,0,.08);padding:1px 5px;border-radius:3px}
-
-/* ── TABS PROCEDURE ───────────────────────────────────────── */
-.proc{margin-top:20px;display:flex;flex-direction:column;gap:12px}
-.proc-tab{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-.proc-tab-hdr{
-  display:flex;align-items:center;gap:12px;padding:14px 18px;
-  background:var(--blue);color:#fff;font-weight:700;font-size:.95rem;cursor:pointer;
-}
-.proc-tab-hdr .tab-num{
-  background:rgba(255,255,255,.2);width:28px;height:28px;border-radius:6px;
-  display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.85rem;
-}
-.proc-tab-body{padding:16px 20px;font-size:.9rem}
-.proc-tab-body ul{padding-left:18px;margin-top:6px}
-.proc-tab-body li{margin-bottom:5px;color:var(--muted)}
-.proc-tab-body li strong{color:var(--text)}
-.proc-tab-body .note{
-  background:var(--blue-l);border-left:3px solid var(--blue-m);
-  padding:8px 12px;border-radius:0 4px 4px 0;margin-top:10px;font-size:.85rem;color:var(--blue);
-}
-
-/* ── METODO GEOMETRICO ────────────────────────────────────── */
-.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px;align-items:start}
-@media(max-width:680px){.method-grid{grid-template-columns:1fr}}
-.method-formulas{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-.method-formulas h4{color:var(--blue);margin-bottom:14px;font-size:.95rem}
-.formula{
-  background:#0d2b4d;color:#A8D8EA;font-family:'Space Mono',monospace;
-  padding:14px 16px;border-radius:6px;font-size:.8rem;line-height:1.8;
-  margin-bottom:12px;overflow-x:auto;
-}
-.formula .kw{color:#81C784}
-.formula .op{color:#FFB300}
-.formula .cm{color:#607D8B;font-style:italic}
-.formula .val{color:#FFD54F}
-.legend{display:flex;flex-direction:column;gap:8px}
-.leg-row{display:flex;gap:10px;align-items:flex-start;font-size:.85rem}
-.leg-sym{font-family:'Space Mono',monospace;background:var(--blue-l);color:var(--blue);
-         padding:2px 8px;border-radius:4px;min-width:70px;text-align:center;flex-shrink:0;font-size:.8rem}
-.leg-desc{color:var(--muted);line-height:1.5}
-.img-figure{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
-.img-figure img{width:100%;display:block}
-.img-figure figcaption{padding:10px 14px;background:var(--surface);font-size:.78rem;color:var(--muted);
-  border-top:1px solid var(--border);font-style:italic;text-align:center}
-
-/* ── EXAMPLE CALC ─────────────────────────────────────────── */
-.calc-example{
-  background:linear-gradient(135deg,var(--green-xl),var(--blue-l));
-  border:1px solid #B2DFDB;border-radius:var(--radius);padding:24px;margin-top:24px;
-  box-shadow:var(--shadow);
-}
-.calc-example h4{font-size:1rem;color:var(--blue);margin-bottom:14px;font-weight:700}
-.calc-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:16px}
-.calc-cell{background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px 12px}
-.calc-cell .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:3px}
-.calc-cell .value{font-family:'Space Mono',monospace;font-weight:700;font-size:.95rem;color:var(--text)}
-.calc-cell.result{border-color:var(--green);background:#E8F5E9}
-.calc-cell.result .value{color:var(--green)}
-.calc-steps{font-family:'Space Mono',monospace;font-size:.8rem;background:#fff;
-  border-radius:6px;padding:14px;border:1px solid var(--border);line-height:1.9;
-  color:#333;overflow-x:auto}
-.calc-steps .step-lbl{color:#2E75B6;font-weight:700}
-.calc-verdict{
-  margin-top:14px;display:flex;align-items:center;gap:12px;
-  background:#fff;border-radius:6px;padding:12px 16px;border-left:4px solid var(--green);
-}
-.calc-verdict .cls{font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--green)}
-.calc-verdict p{font-size:.88rem;color:var(--muted);margin:0}
-
-/* ── OUTPUT FIELDS ────────────────────────────────────────── */
-.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-@media(max-width:580px){.fields-grid{grid-template-columns:1fr}}
-.field-item{background:var(--surface);border:1px solid var(--border);border-radius:6px;
-            padding:10px 13px;display:flex;gap:10px;align-items:flex-start}
-.field-name{font-family:'Space Mono',monospace;font-size:.75rem;background:var(--blue-l);
-            color:var(--blue);padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0}
-.field-desc{font-size:.8rem;color:var(--muted);line-height:1.45}
-
-/* ── FOOTER ───────────────────────────────────────────────── */
-footer{background:#0d2b4d;color:rgba(255,255,255,.65);text-align:center;padding:32px 24px;font-size:.83rem}
-footer strong{color:#fff}
-footer a{color:#81C784}
-
-/* ── UTILITY ──────────────────────────────────────────────── */
-.text-green{color:var(--green)}
-.chip{display:inline-block;background:var(--blue-l);color:var(--blue);
-      border-radius:20px;padding:2px 10px;font-size:.78rem;font-weight:700;margin-right:4px}
+.note{background:var(--blue-l);border-left:4px solid var(--blue-m);border-radius:0 6px 6px 0;
+  padding:12px 16px;margin:14px 0;font-size:.88rem;color:var(--blue)}
+.warn{background:var(--amber-l);border-left:4px solid var(--amber);border-radius:0 6px 6px 0;
+  padding:12px 16px;margin:14px 0;font-size:.88rem;color:#4E2D00}
+.formula{background:#0d2b4d;color:#DCEEFB;font-family:'Space Mono',monospace;
+  padding:14px 18px;border-radius:6px;font-size:.84rem;line-height:1.9;margin:14px 0;overflow-x:auto;font-weight:400}
+.formula b{color:#FFE082;font-weight:700}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:14px 0;font-size:.88rem}
+.kv dt{font-family:'Space Mono',monospace;font-size:.8rem;background:var(--blue-l);color:var(--blue);
+  padding:2px 8px;border-radius:4px;height:fit-content;white-space:nowrap}
+.kv dd{color:var(--muted)}
+footer{background:#0d2b4d;color:#D6E4F0;text-align:center;padding:24px;font-size:.84rem;margin-top:24px}
+footer a{color:#A5D6A7;font-weight:700}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
-  <div class="hero-tree">🌳</div>
-  <h1>QgisTree<span>Risk</span></h1>
-  <p class="hero-sub" style="color:#fff">Plugin QGIS per la <strong style="color:#fff">Valutazione del Rischio Arboreo</strong><br>secondo il Protocollo Areté® v4.0 — ARBORETE®</p>
-  <div class="badge-row">
-    <span class="badge badge-ver">v0.1</span>
-    <span class="badge badge-qgis">QGIS 3.22 – 4.x</span>
-    <span class="badge badge-gpl">© ALIAS ATP — GPL 2.0</span>
-    <span class="badge badge-cc">Protocollo Areté® CC BY-NC-ND 4.0</span>
-  </div>
-  <div class="hero-warn">
-    ⚠ <strong>STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO — NON OPERATIVO.</strong><br>
-    I risultati non costituiscono perizia professionale né hanno valenza legale o assicurativa.
-    Per valutazioni ufficiali consultare un tecnico abilitato e il protocollo ufficiale:
-    <a href="http://www.protocolloarete.it" style="color:#FFCDD2">protocolloarete.it</a>
-  </div>
+  <h1>📖 Genera Carta Vulnerabilità da OSM</h1>
+  <p>Come funziona l'elaborazione automatica della CV da OpenStreetMap e la taratura demografica con confini comunali e zonizzazione</p>
 </div>
 
-<!-- ── FUNZIONALITÀ ── -->
-<section class="section">
-<div class="wrapper">
-  <h2><span class="ico">⚡</span> Funzionalità principali</h2>
-  <div class="cards">
-    <div class="card"><div class="card-ico">📍</div><h4>Stima bersaglio OSM</h4><p>Interroga Overpass API per strade, edifici, aree e POI nell'area di caduta di ogni albero.</p></div>
-    <div class="card"><div class="card-ico">🗺️</div><h4>Carta Vulnerabilità</h4><p>Layer poligonale personalizzabile con parametri reali di frequentazione. Supporto metodo geometrico SPOT/SDAN.</p></div>
-    <div class="card"><div class="card-ico">🌿</div><h4>Classe di Impulso (CF (impulso))</h4><p>Calcolo automatico dell'energia derivante dal cedimento dell'albero intero e della branca pericolosa.</p></div>
-    <div class="card"><div class="card-ico">📊</div><h4>Rischio per settore</h4><p>Radici, colletto, fusto, branche — giudizio ordinario VRA e speditivo triage per ciascun settore.</p></div>
-    <div class="card"><div class="card-ico">🎯</div><h4>Layer SPOT</h4><p>Poligoni area di potenziale caduta (raggio = h albero) con stile cromatico Areté.</p></div>
-    <div class="card"><div class="card-ico">📐</div><h4>Output in UTM</h4><p>Layer VRA e CV prodotti automaticamente nel CRS UTM coerente con il layer sorgente.</p></div>
-  </div>
-</div>
-</section>
+<!-- COSA FA -->
+<section class="section"><div class="wrapper">
+<h2>🎯 Cosa fa questa funzione</h2>
+<p>L'algoritmo <strong>Genera Carta Vulnerabilità da OSM</strong> costruisce automaticamente il layer poligonale della CV scaricando i dati territoriali da OpenStreetMap. Per ogni elemento del territorio (strada, edificio, parco, scuola...) crea un poligono con i <strong>parametri di frequentazione precompilati</strong>: veicoli/giorno, pedoni/giorno, persone presenti, ore di permanenza.</p>
+<p>Il risultato è una Carta della Vulnerabilità pronta all'uso che la funzione <strong>Valutazione Rischio Arboreo</strong> interroga per assegnare la classe di Bersaglio (B) a ogni albero.</p>
+<div class="warn">⚠ I valori precompilati sono <strong>stime da rivedere</strong>: derivano dalla classificazione OSM, non da rilievi. Per valutazioni accurate verifica e correggi i parametri delle aree critiche nel form attributi.</div>
+</div></section>
 
-<!-- ── LICENZE ── -->
-<section class="section">
-<div class="wrapper">
-  <h2><span class="ico">⚖️</span> Licenze</h2>
-  <div class="lic-grid">
-    <div class="lic-box lic-plugin">
-      <h4>🔧 Plugin QgisTreeRisk</h4>
-      <p><strong>© ALIAS ATP</strong> — rilasciato sotto licenza <code>GPL 2.0</code>.<br>
-      Puoi usarlo, modificarlo e distribuirlo liberamente nel rispetto della GPL 2.0.<br><br>
-      Repository: <a href="https://github.com/aliasatp/QgisTreeRisk" style="color:#1B5E20">github.com/aliasatp/QgisTreeRisk</a><br>
-      Segnalazioni: <a href="https://github.com/aliasatp/QgisTreeRisk/issues" style="color:#1B5E20">Issues GitHub</a></p>
-    </div>
-    <div class="lic-box lic-prot">
-      <h4>📋 Protocollo Areté® v4.0</h4>
-      <p>Il plugin riproduce parzialmente la logica del Protocollo Areté® — ARBORETE®. Il Protocollo è distribuito con licenza <code>CC BY-NC-ND 4.0</code>: <strong> non commerciale</strong>, <strong> nessuna opera derivata</strong> senza autorizzazione.<br><br>
-      <strong>Citazione obbligatoria:</strong><br>
-      <em>"Protocollo Areté® per la Valutazione del Rischio Arboreo [ver. 4.0] — ARBORETE® (protocolloarete.it)"</em></p>
-    </div>
-  </div>
-</div>
-</section>
+<!-- FLUSSO -->
+<section class="section"><div class="wrapper">
+<h2>⚙️ Come funziona — il flusso in 6 passi</h2>
+<div class="flow">
 
-<!-- ── INSTALLAZIONE ── -->
-<section class="section">
-<div class="wrapper">
-  <h2><span class="ico">📦</span> Installazione in QGIS</h2>
-  <div class="steps">
-    <div class="step"><div class="step-num"></div><div class="step-body">
-      <strong>Scarica il file ZIP</strong>
-      <p>Scarica <code class="path">arete_vra_plugin.zip</code> dalla pagina
-      <a href="https://github.com/aliasatp/QgisTreeRisk/releases">Releases</a> del repository GitHub.</p>
-    </div></div>
-    <div class="step"><div class="step-num"></div><div class="step-body">
-      <strong>Apri il Gestore Plugin di QGIS</strong>
-      <p>Menu <code class="path">Plugin → Gestisci e Installa Plugin…</code></p>
-    </div></div>
-    <div class="step"><div class="step-num"></div><div class="step-body">
-      <strong>Installa da ZIP</strong>
-      <p>Seleziona la scheda <code class="path">Installa da ZIP</code>, scegli il file scaricato e clicca <strong>Installa plugin</strong>.</p>
-    </div></div>
-    <div class="step"><div class="step-num"></div><div class="step-body">
-      <strong>Trova il plugin in Processing</strong>
-      <p>Apri <code class="path">Processing → Cassetta degli Strumenti</code>. Troverai il gruppo <strong>QgisTreeRisk</strong> con tre algoritmi:</p>
-      <ul>
-        <li><strong>Valutazione Rischio Arboreo</strong> — dialog interattivo principale</li>
-        <li><strong>Crea Carta Vulnerabilità</strong> — genera il layer CV vuoto</li>
-        <li><strong>Genera Carta Vulnerabilità da OSM</strong> — scarica e precompila da OpenStreetMap</li>
-      </ul>
-    </div></div>
-    <div class="step"><div class="step-num"></div><div class="step-body">
-      <strong>Requisiti</strong>
-      <p>QGIS <strong>3.22+</strong> (LTR consigliata: 3.28 o 3.34) oppure <strong>QGIS 4.x</strong>. Connessione internet per la stima automatica da OSM (Overpass API).</p>
-    </div></div>
-  </div>
-</div>
-</section>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-body">
+    <strong>Definisci l'area di studio</strong>
+    <p>Disegna un rettangolo sulla mappa (parametro <code>Estensione</code>). L'algoritmo interroga Overpass API solo dentro questa finestra.</p>
+  </div></div>
+  <div class="flow-connector"></div>
 
-<!-- ── PROCEDURA ── -->
-<section class="section">
-<div class="wrapper">
-  <h2><span class="ico">🔬</span> Procedura di utilizzo</h2>
-  <p>Avvia il dialog interattivo da <strong>Processing → QgisTreeRisk → Valutazione Rischio Arboreo</strong>.</p>
-  <div class="proc">
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-body">
+    <strong>Scarico dati OSM</strong>
+    <p>Vengono scaricate 4 famiglie di oggetti: <strong>strade</strong> (highway), <strong>edifici</strong> (building), <strong>usi del suolo</strong> (landuse: parchi, residenziale, industriale...) e <strong>punti di interesse</strong> (scuole, ospedali, bar, panchine, parcheggi...).</p>
+  </div></div>
+  <div class="flow-connector"></div>
 
-    <div class="proc-tab">
-      <div class="proc-tab-hdr"><span class="tab-num">1</span> Layer e Sorgente Bersaglio</div>
-      <div class="proc-tab-body">
-        <p>Seleziona il <strong>layer puntuale</strong> degli alberi da valutare. Scegli come stimare la classe di Bersaglio:</p>
-        <ul>
-          <li><strong>OSM automatico</strong> — interroga Overpass API; raggio = altezza (albero) o d_chioma/2 (branca)</li>
-          <li><strong>Carta Vulnerabilità</strong> — layer poligonale con dati di frequentazione personalizzati</li>
-          <li><strong>Da layer alberi</strong> — legge i campi <code>B_man_alb</code> / <code>B_man_bra</code> dalla tabella attributi; permette anche un valore fisso globale e il Moltiplicatore</li>
-        </ul>
-        <div class="note">💡 Gli output <em>VRA_Arete_v4</em> e <em>SPOT_*</em> vengono prodotti automaticamente nel CRS UTM coerente con il layer sorgente.</div>
-      </div>
-    </div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-body">
+    <strong>Conversione in poligoni CV</strong>
+    <p>Ogni oggetto diventa un poligono: le strade vengono bufferizzate per la larghezza della carreggiata (più marciapiedi se presenti), i POI puntuali diventano cerchi con raggio tipico, edifici e landuse mantengono la geometria. Ogni poligono riceve <code>cv_tipo</code> (veicolare / pedonale / occupazione / manufatto) e i parametri di frequentazione tipici della categoria.</p>
+  </div></div>
+  <div class="flow-connector"></div>
 
-    <div class="proc-tab">
-      <div class="proc-tab-hdr"><span class="tab-num">2</span> Settore Albero (radici / colletto / fusto)</div>
-      <div class="proc-tab-body">
-        <p>Per ogni parametro biometrico scegli tra <strong>campo del layer</strong> (dropdown) o <strong>valore fisso</strong> (spinbox):</p>
-        <ul>
-          <li><strong>h</strong> — Altezza albero (m): determina CF (impulso), raggio SPOT e area di caduta</li>
-          <li><strong>d_ch</strong> — Diametro chioma (m): usato per CF (impulso) e raggio bersaglio branca</li>
-          <li><strong>circ</strong> — Circonferenza tronco a 1.30 m (cm)</li>
-          <li><strong>h_bers</strong> — Altezza bersaglio (default 1.80 m)</li>
-          <li><strong>POF radici / colletto / fusto</strong> — Probabilità di cedimento (0=approfondimento, 9=assente)</li>
-        </ul>
-      </div>
-    </div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-body">
+    <strong>Taratura demografica — fattore k</strong>
+    <p>I valori tipici sono calibrati su un comune medio italiano. Il <strong>fattore k</strong> li scala in base alla popolazione reale dell'area: un borgo da 800 abitanti ha flussi molto più bassi di una metropoli. Tre modalità: valore manuale, layer comuni, layer zonizzazione (vedi sotto).</p>
+  </div></div>
+  <div class="flow-connector"></div>
 
-    <div class="proc-tab">
-      <div class="proc-tab-hdr"><span class="tab-num">3</span> Settore Branca pericolosa</div>
-      <div class="proc-tab-body">
-        <p>Parametri della branca più critica:</p>
-        <ul>
-          <li><strong>d_br</strong> — Diametro branca (cm)</li>
-          <li><strong>l_br</strong> — Lunghezza branca (m)</li>
-          <li><strong>h_ins</strong> — Altezza di inserzione sul fusto (m)</li>
-          <li><strong>POF branche/rami</strong> — classe 0–9</li>
-        </ul>
-      </div>
-    </div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-body">
+    <strong>Output in UTM</strong>
+    <p>Il layer CV viene generato nel fuso UTM corretto calcolato dal centro dell'area (es. EPSG:32632 per l'Italia nord-occidentale). Le aree dei poligoni risultano in m² reali — essenziale per il metodo geometrico SPOT/SDAN.</p>
+  </div></div>
+  <div class="flow-connector"></div>
 
-    <div class="proc-tab">
-      <div class="proc-tab-hdr"><span class="tab-num">4</span> Esegui e risultati</div>
-      <div class="proc-tab-body">
-        <p>Clicca <strong>Calcola VRA Areté v4.0</strong>. Al termine vengono aggiunti due layer:</p>
-        <ul>
-          <li><strong>VRA_Arete_v4</strong> — punti con tutti i campi di rischio</li>
-          <li><strong>SPOT_*</strong> — poligoni area di caduta con stile cromatico Areté</li>
-        </ul>
-        <div class="note">Il log mostra il CRS di input e output, la sorgente bersaglio usata e l'esito per ogni albero.</div>
-        <div class="fields-grid" style="margin-top:14px">
-          <div class="field-item"><span class="field-name">R_radici…branche</span><span class="field-desc">Livello rischio per settore (1:3 → &lt;1:1M)</span></div>
-          <div class="field-item"><span class="field-name">Rg_radici…branche</span><span class="field-desc">Giudizio ordinario VRA per settore</span></div>
-          <div class="field-item"><span class="field-name">Rs_radici…branche</span><span class="field-desc">Speditiva triage per settore</span></div>
-          <div class="field-item"><span class="field-name">Rv_radici…branche</span><span class="field-desc">Gravità numerica 1–7 per settore</span></div>
-          <div class="field-item"><span class="field-name">R_peggiore</span><span class="field-desc">Rischio complessivo più gravoso</span></div>
-          <div class="field-item"><span class="field-name">R_giudizio / Rs</span><span class="field-desc">Giudizio e speditiva complessivi</span></div>
-          <div class="field-item"><span class="field-name">Ba_finale / Bb_finale</span><span class="field-desc">Classe bersaglio albero / branca</span></div>
-          <div class="field-item"><span class="field-name">CF (impulso)_albero / CF (impulso)_branca</span><span class="field-desc">Classe di Impulso (energia cedimento)</span></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-</section>
-
-<!-- ── METODO OCCUPAZIONE ── -->
-<section class="section">
-<div class="wrapper">
-  <h2><span class="ico">📐</span> Metodo di stima dell'occupazione stabile</h2>
-  <p>Il plugin implementa due metodi alternativi per calcolare la <strong>classe di Bersaglio B</strong> quando il bersaglio è di tipo <em>occupazione</em> (persone stabili nell'area, es. parchi, cortili, pertinenze).</p>
-
-  <h3>Perché non basta il tempo di occupazione flat?</h3>
-  <p>Impostare <em>"8 ore/giorno di occupazione"</em> su un parco da 10.000 m² è scorretto: quelle 8 ore si distribuiscono sull'intera area, mentre l'albero può cadere solo nella sua SPOT (raggio = h). 
-  Il metodo geometrico corregge questo errore proporzionando l'occupazione all'area reale di influenza.<br>
-
-<b>Calcolo del tasso di occupazione</b><br>
-Riferimenti da pag. 157 a 165 e da pag. 205 a 206: <em>Valutazione e gestione del rischio arboreo. Manuale operativo. Gifor editriche - Arborete a cura di Sani L., 2020</em><br>
-La procedura descritta nei riferimenti menzionati non è parte integrante del Protocollo Areté, restituisce come risultato un tasso di occupazione e si basa sul calcolo delle probabilità. 
-La procedura è stata parzialmente modificata da ALIAS ATP che ha sostituito l'area di insidenza con la SPOT e introdotto la SDAN quale fattore che condiziona il calcolo probabilistico.
-
-
-  <div class="method-grid">
-    <div>
-      <div class="method-formulas">
-        <h4>📌 Metodo FLAT <span class="chip">cv_metodo = flat</span></h4>
-        <div class="formula">
-<span class="kw">B_occ</span> <span class="op">=</span> classe_B_occupazione(<span class="val">cv_ore_flat</span>)
-<span class="cm"># Ore/giorno flat → confronto diretto Tab. A3.4</span>
-<span class="cm"># Usare per aree piccole o dati già elaborati</span>
-        </div>
-        <h4 style="margin-top:18px">📐 Metodo GEOMETRICO <span class="chip">cv_metodo = geometrico</span></h4>
-        <div class="formula">
-<span class="kw">SPOT</span>     <span class="op">=</span> h² × π          <span class="cm"># area caduta (r=h)</span>
-<span class="kw">SDAN</span>     <span class="op">=</span> ((h+d_ch)/2)² × π <span class="cm"># ingombro albero</span>
-<span class="kw">sup</span>      <span class="op">=</span> cv_sup_mq  <span class="cm"># o area poligono CV</span>
-<span class="kw">ore_ann</span>  <span class="op">=</span> per_g × gg_anno × ore_pp
-<span class="kw">ore_spot</span> <span class="op">=</span> ore_ann × (SDAN/sup) × min(SPOT,sup)/SPOT
-<span class="kw">ore_eff</span>  <span class="op">=</span> ore_spot / 365
-<span class="kw">B_occ</span>    <span class="op">=</span> classe_B_occupazione(<span class="val">ore_eff</span>)
-        </div>
-        <div class="legend" style="margin-top:14px">
-          <div class="leg-row"><span class="leg-sym">SPOT</span><span class="leg-desc">Area di potenziale caduta — cerchio con raggio = altezza albero</span></div>
-          <div class="leg-row"><span class="leg-sym">SDAN</span><span class="leg-desc">Superficie Danneggiabile — ingombro dell'albero a terra; dipende anche dal diametro chioma</span></div>
-          <div class="leg-row"><span class="leg-sym">sup</span><span class="leg-desc">Superficie frequentata (m²): campo cv_sup_mq oppure area del poligono CV in UTM</span></div>
-          <div class="leg-row"><span class="leg-sym">per_g</span><span class="leg-desc">Persone/giorno presenti nell'area (cv_per_giorno)</span></div>
-          <div class="leg-row"><span class="leg-sym">ore_pp</span><span class="leg-desc">Ore/giorno di permanenza per persona (cv_ore_occ)</span></div>
-          <div class="leg-row"><span class="leg-sym">ore_eff</span><span class="leg-desc">Ore/giorno equivalenti nella SPOT: input per la tabella Areté</span></div>
-        </div>
-      </div>
-    </div>
-    <figure class="img-figure">
-      <img src="esempio.jpg"> <figcaption>Schema SPOT / SDAN / Superficie frequentata. Fonte: ALIAS ATP — targetk.php</figcaption>
-    </figure>
-  </div>
-
-  <!-- ESEMPIO NUMERICO -->
-  <div class="calc-example">
-    <h4>🧮 Esempio numerico — Cortile scolastico</h4>
-    <div class="calc-row">
-      <div class="calc-cell"><div class="label">Altezza albero h</div><div class="value">15 m</div></div>
-      <div class="calc-cell"><div class="label">Diametro chioma</div><div class="value">8 m</div></div>
-      <div class="calc-cell"><div class="label">Superficie cortile</div><div class="value">2.800 m²</div></div>
-      <div class="calc-cell"><div class="label">Persone/giorno</div><div class="value">400</div></div>
-      <div class="calc-cell"><div class="label">Ore/pers/giorno</div><div class="value">2,0 h</div></div>
-      <div class="calc-cell"><div class="label">Giorni/anno</div><div class="value">210 (scuola)</div></div>
-    </div>
-    <div class="calc-steps">
-<span class="step-lbl">SPOT</span>     = 15² × 3.14159 = <strong>706 m²</strong>
-<span class="step-lbl">SDAN</span>     = ((15+8)/2)² × 3.14159 = 11.5² × π = <strong>415 m²</strong>
-<span class="step-lbl">ore_ann</span>  = 400 × 210 × 2.0 = <strong>168.000 ore·pers/anno</strong>
-<span class="step-lbl">SDAN/sup</span> = 415 / 2.800 = <strong>0.148</strong>   (14.8% dell'area è SDAN)
-<span class="step-lbl">min(SPOT,sup)/SPOT</span> = 706/706 = <strong>1.00</strong>   (SPOT ⊂ cortile)
-<span class="step-lbl">ore_spot</span> = 168.000 × 0.148 × 1.00 = <strong>24.900 ore/anno</strong>
-<span class="step-lbl">ore_eff</span>  = 24.900 / 365 = <strong>68 min/giorno</strong>  ≈ 1.14 ore/gg
-    </div>
-    <div class="calc-verdict">
-      <div class="cls">B = 3</div>
-      <p>Con il metodo FLAT (2 ore flat) si otterrebbe <strong>B = 2</strong> — sovrastimato.<br>
-      Il metodo geometrico restituisce <strong>B = 3</strong> (occupazione frequente), più aderente alla realtà: l'albero influenza solo il 14.8% del cortile, non l'intera superficie.</p>
-    </div>
-  </div>
+  <div class="flow-step"><div class="flow-num">6</div><div class="flow-body">
+    <strong>Revisione manuale</strong>
+    <p>Apri il form attributi (organizzato a schede) e verifica i poligoni vicini agli alberi da valutare. Correggi flussi, aggiungi aree mancanti, elimina poligoni irrilevanti.</p>
+  </div></div>
 
 </div>
-</section>
+</div></section>
 
-<!-- ── FOOTER ── -->
+<!-- COSA VIENE PRECOMPILATO -->
+<section class="section"><div class="wrapper">
+<h2>📋 Cosa viene precompilato</h2>
+<p>Ogni categoria OSM ha parametri tipici. Alcuni esempi:</p>
+<table>
+<tr><th>Oggetto OSM</th><th>cv_tipo</th><th>Parametri precompilati</th></tr>
+<tr><td>Strada primaria</td><td>veicolare</td><td>10.000 vei/g · 90 km/h · 200 ped/g su marciapiede</td></tr>
+<tr><td>Strada residenziale</td><td>veicolare</td><td>300 vei/g · 30 km/h · 150 ped/g</td></tr>
+<tr><td>Scale, ippovie, sentieri</td><td>pedonale</td><td>solo flusso pedonale, 0 veicoli</td></tr>
+<tr><td>Parco / giardino</td><td>occupazione</td><td>persone/giorno e ore di permanenza tipiche · metodo geometrico</td></tr>
+<tr><td>Scuola</td><td>occupazione</td><td>400 pers/g · 2 h/pers · 210 giorni/anno</td></tr>
+<tr><td>Ospedale</td><td>occupazione</td><td>500 pers/g · 12 h presenza · 365 giorni</td></tr>
+<tr><td>Bar / ristorante</td><td>occupazione</td><td>30-40 pers/g · permanenza media</td></tr>
+<tr><td>Edificio</td><td>manufatto</td><td>valore economico stimato per tipologia</td></tr>
+<tr><td>Parcheggio</td><td>veicolare</td><td>200 vei/g a bassa velocità</td></tr>
+</table>
+<div class="note">💡 Per le aree di tipo <strong>occupazione</strong> il campo <code>cv_metodo</code> è sempre <code>geometrico</code>: la classe B viene calcolata con il metodo SPOT/SDAN che proporziona la frequentazione all'area di caduta reale dell'albero.</div>
+</div></section>
+
+<!-- FATTORE K -->
+<section class="section"><div class="wrapper">
+<h2>👥 La taratura demografica: il fattore k</h2>
+<p>I parametri tipici valgono per un <strong>comune medio (30.000–80.000 abitanti)</strong>. Il fattore k li riscala per il contesto reale:</p>
+
+<div class="formula">
+cv_vei_g  → cv_vei_g  × k     <b># veicoli/giorno</b><br>
+cv_ped_g  → cv_ped_g  × k     <b># pedoni/giorno</b><br>
+cv_ore_flat → min(cv_ore_flat × k, 24)   <b># ore flat (max 24)</b><br>
+cv_per_giorno → cv_per_giorno × k        <b># persone/giorno (metodo geometrico)</b>
+</div>
+
+<h3>Le 9 fasce demografiche</h3>
+<table>
+<tr><th>Fascia</th><th>Abitanti</th><th>k</th><th>Contesto</th></tr>
+<tr><td>XXS</td><td>&lt; 500</td><td>0.05</td><td>Borgata, nucleo isolato</td></tr>
+<tr><td>XS</td><td>500 – 2.000</td><td>0.15</td><td>Frazione, paese piccolo</td></tr>
+<tr><td>S</td><td>2.000 – 10.000</td><td>0.35</td><td>Piccolo comune</td></tr>
+<tr><td>M-</td><td>10.000 – 30.000</td><td>0.65</td><td>Comune minore</td></tr>
+<tr class="k-baseline"><td>M ★</td><td>30.000 – 80.000</td><td>1.00</td><td>Comune medio — BASELINE</td></tr>
+<tr><td>M+</td><td>80.000 – 200.000</td><td>1.40</td><td>Comune grande</td></tr>
+<tr><td>L</td><td>200.000 – 500.000</td><td>1.80</td><td>Città media</td></tr>
+<tr><td>XL</td><td>500.000 – 2.000.000</td><td>2.50</td><td>Grande città</td></tr>
+<tr><td>XXL</td><td>&gt; 2.000.000</td><td>3.50</td><td>Metropoli</td></tr>
+</table>
+
+<h3>Le 3 sorgenti del fattore k</h3>
+
+<h3 style="font-size:.95rem">1 · Valore manuale</h3>
+<p>Inserisci il numero di abitanti del comune: l'algoritmo determina la fascia e applica il k corrispondente <strong>a tutta l'area di studio</strong>. Veloce ma uniforme.</p>
+
+<h3 style="font-size:.95rem">2 · Layer comuni (confini con popolazione)</h3>
+<p>Fornisci un layer poligonale dei confini comunali con il campo <code>pop_res</code> (popolazione residente). Per ogni poligono CV l'algoritmo individua il comune che lo contiene e applica il k della sua fascia. <strong>Ideale per aree di studio che attraversano più comuni.</strong></p>
+<div class="note">💡 Usa l'algoritmo <strong>Crea layer Comuni</strong> per generare un layer vuoto già formattato: digitalizza i confini (o incolla geometrie ISTAT) e compila <code>pop_res</code>.</div>
+
+<h3 style="font-size:.95rem">3 · Layer zonizzazione (k zona per zona)</h3>
+<p>Il più preciso: disegni le zone con caratteristiche omogenee (centro storico, periferia, lungolago turistico...) e assegni a ciascuna il suo k con il campo <code>dz_k</code>. In più puoi modellare i <strong>flussi extra</strong>:</p>
+<div class="kv">
+  <dt>dz_k</dt><dd>Moltiplicatore base della zona (obbligatorio). Selezionabile dalle 9 fasce nel form.</dd>
+  <dt>dz_k_extra</dt><dd>Flusso aggiuntivo: turismo, pendolari, eventi. 0 = assente.</dd>
+  <dt>dz_k_modo</dt><dd><strong>somma</strong>: k = dz_k + dz_k_extra − 1.0 (flussi sovrapposti, es. residenti + turisti) · <strong>massimo</strong>: k = max(dz_k, dz_k_extra) (eventi discontinui, es. fiere, stadi)</dd>
+</div>
+<div class="note">💡 Usa l'algoritmo <strong>Crea layer Zonizzazione</strong> per il layer vuoto preformattato: tutti i campi hanno menu a tendina con le fasce e le spiegazioni.</div>
+
+<h3>Esempio pratico — lago turistico</h3>
+<p>Comune di 5.000 abitanti (fascia S, k=0.35) con lungolago che d'estate accoglie 40.000 presenze:</p>
+<ul>
+  <li><strong>Zona "centro paese"</strong>: dz_k = 0.35 — flussi da residenti</li>
+  <li><strong>Zona "lungolago"</strong>: dz_k = 0.35 + dz_k_extra = 2.50 (flusso da grande meta turistica), modo = <code>somma</code> → k = 0.35 + 2.50 − 1.0 = <strong>1.85</strong></li>
+</ul>
+<p>Risultato: gli alberi del lungolago hanno bersaglio coerente con l'afflusso turistico reale, quelli del centro con i soli residenti.</p>
+</div></section>
+
+<!-- ORDINE DI PRIORITÀ -->
+<section class="section"><div class="wrapper">
+<h2>🔄 Ordine di applicazione</h2>
+<p>Il fattore k agisce <strong>prima</strong> del calcolo della classe B — modifica i flussi della CV. Il Moltiplicatore della VRA agisce invece <strong>dopo</strong>, sul valore di rischio della tripla (B, CF, POF):</p>
+<div class="formula">
+dati OSM tipici → <b>× k</b> → CV calibrata → classe B → tripla (B,CF,POF) → <b>× molt</b> → livello di rischio
+</div>
+<ul>
+  <li><strong>Fattore k</strong> = correzione del contesto demografico (quanta gente c'è davvero)</li>
+  <li><strong>Moltiplicatore</strong> = correzione prudenziale del rischio (eventi eccezionali, incertezza del rilievo)</li>
+</ul>
+</div></section>
+
+<!-- CHECKLIST -->
+<section class="section"><div class="wrapper">
+<h2>✅ Checklist operativa</h2>
+<ol>
+  <li>Esegui <strong>Crea layer Comuni</strong> o <strong>Crea layer Zonizzazione</strong> (se vuoi la taratura spaziale)</li>
+  <li>Digitalizza confini/zone e compila <code>pop_res</code> oppure <code>dz_k</code></li>
+  <li>Esegui <strong>Genera Carta Vulnerabilità da OSM</strong>: definisci l'estensione, scegli la sorgente k</li>
+  <li>Rivedi i poligoni CV vicino agli alberi: correggi flussi e parametri dove necessario</li>
+  <li>Esegui <strong>Valutazione Rischio Arboreo</strong> selezionando la CV come sorgente bersaglio</li>
+</ol>
+</div></section>
+
 <footer>
-  <p><strong>QgisTreeRisk v0.1</strong> — © ALIAS ATP — GPL 2.0 &nbsp;|&nbsp;
-  <a href="https://github.com/aliasatp/QgisTreeRisk">GitHub</a> &nbsp;|&nbsp;
-  <a href="https://www.aliasinfo.it">aliasinfo.it</a></p>
-  <p style="margin-top:8px">Protocollo Areté® — ARBORETE® — Licenza CC BY-NC-ND 4.0 — 
-  <a href="http://www.protocolloarete.it">protocolloarete.it</a></p>
+  <p><strong style="color:#fff">QgisTreeRisk</strong> — © ALIAS ATP — GPL 2.0 ·
+  <a href="https://github.com/aliasatp/QgisTreeRisk">GitHub</a> ·
+  <a href="https://aliasatp.github.io/QgisTreeRisk">Documentazione</a></p>
+  <p style="margin-top:6px">Protocollo Areté® — ARBORETE® — CC BY-NC-ND 4.0 — <a href="http://www.protocolloarete.it">protocolloarete.it</a></p>
 </footer>
 
 </body>
