@@ -4,6 +4,8 @@
 
 Plugin QGIS open source per la stima del rischio di cedimento arboreo su grandi dataset. Calcola la classe di rischio per i quattro settori analitici (radici, colletto, fusto, branche) con giudizio ordinario VRA e speditiva triage.
 > Guida online:  [manuale](https://aliasatp.github.io/QgisTreeRisk/)
+> Tutorial: [video](https://youtube.com/playlist?list=PL8Ge4eRAVkxZ3ik1aOr48S_wDr5ZC6i2J&si=9n2qngdckBv7UzOK)
+> Guida per Carta della vulnerabilità da OSM: [manuale](https://aliasatp.github.io/QgisTreeRisk/help.html)
 
 > ⚠️ **STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO — NON OPERATIVO.**  
 > I risultati non costituiscono perizia professionale né hanno valenza legale o assicurativa.  
