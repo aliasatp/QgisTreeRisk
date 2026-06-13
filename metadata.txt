@@ -8,15 +8,12 @@ author=ALIAS ATP
 email=alias@aliasinfo.it
 about=VALUTATORE DEL RISCHIO ARBOREO E DEL BERSAGLIO SECONDO IL METODO ARETE' v.4.0
 Tree risk and target assessment according to Arete method v.4.0
-
 STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO - NON OPERATIVO
  I risultati prodotti da questo simulatore non costituiscono e non sostituiscono una perizia o una valutazione tecnica professionale, un'indagine visiva diretta ne' alcun documento a valenza legale, assicurativa o amministrativa.
- L'uso in contesti operativi e' escluso.
- 
+ L'uso in contesti operativi e' escluso. 
  Riferimento metodologico:
  Questo simulatore riproduce parzialmente la logica di calcolo del Protocollo Arete' per la Valutazione del Rischio Arboreo [ver. 4.0] - ARBORETE(r) - a fini esclusivamente dimostrativi e formativi. Per valutazioni ufficiali
- consultare un tecnico abilitato e fare riferimento al protocollo ufficiale.
- 
+ consultare un tecnico abilitato e fare riferimento al protocollo ufficiale. 
  Citazione obbligatoria per attribuzione:
  "Protocollo Arete(r) per la Valutazione del Rischio Arboreo [ver. 4.0] - ARBORETE(r) (http://www.protocolloarete.it)"
 tracker=https://github.com/aliasatp/QgisTreeRisk/issues
