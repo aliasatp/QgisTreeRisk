@@ -2,34 +2,23 @@
 name=QgisTreeRisk
 qgisMinimumVersion=3.22
 qgisMaximumVersion=4.99
-description=Valutazione Rischio Arboreo
+description=Valutazione Rischio Arboreo - Tree risk assessment
 version=0.3
 author=ALIAS ATP
 email=alias@aliasinfo.it
 about=VALUTATORE DEL RISCHIO ARBOREO E DEL BERSAGLIO SECONDO IL METODO ARETE' v.4.0
+ Tree risk and target assessment according to Areté method v.4.0
+ 
  STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO - NON OPERATIVO
- I risultati prodotti da questo simulatore non costituiscono e non sostituiscono
- una perizia o una valutazione tecnica professionale, un'indagine visiva diretta
- ne' alcun documento a valenza legale, assicurativa o amministrativa.
+ I risultati prodotti da questo simulatore non costituiscono e non sostituiscono una perizia o una valutazione tecnica professionale, un'indagine visiva diretta ne' alcun documento a valenza legale, assicurativa o amministrativa.
  L'uso in contesti operativi e' escluso.
  
  Riferimento metodologico:
- Questo simulatore riproduce parzialmente la logica di calcolo del Protocollo
- Arete' per la Valutazione del Rischio Arboreo [ver. 4.0] - ARBORETE(r) -
- a fini esclusivamente dimostrativi e formativi. Per valutazioni ufficiali
+ Questo simulatore riproduce parzialmente la logica di calcolo del Protocollo Arete' per la Valutazione del Rischio Arboreo [ver. 4.0] - ARBORETE(r) - a fini esclusivamente dimostrativi e formativi. Per valutazioni ufficiali
  consultare un tecnico abilitato e fare riferimento al protocollo ufficiale.
  
- Il plugin rispetta la Licenza d'uso CC BY-NC-ND 4.0 con cui e' rilasciato
- il Protocollo Arete(r).
- Protocollo Arete(r) - Licenza Creative Commons BY-NC-ND 4.0 Internazionale
- Il Protocollo Arete e' distribuito con licenza CC BY-NC-ND 4.0
- (Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale).
- L'utilizzo non e' consentito per scopi commerciali e non e' ammessa la
- distribuzione di opere derivate senza autorizzazione degli autori.
- 
  Citazione obbligatoria per attribuzione:
- "Protocollo Arete(r) per la Valutazione del Rischio Arboreo [ver. 4.0]
- - ARBORETE(r) (http://www.protocolloarete.it)"
+ "Protocollo Arete(r) per la Valutazione del Rischio Arboreo [ver. 4.0] - ARBORETE(r) (http://www.protocolloarete.it)"
 tracker=https://github.com/aliasatp/QgisTreeRisk/issues
 repository=https://github.com/aliasatp/QgisTreeRisk
 homepage=https://www.aliasinfo.it
