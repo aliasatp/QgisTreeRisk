@@ -7,7 +7,7 @@ version=0.3
 author=ALIAS ATP
 email=alias@aliasinfo.it
 about=VALUTATORE DEL RISCHIO ARBOREO E DEL BERSAGLIO SECONDO IL METODO ARETE' v.4.0
-Tree risk and target assessment according to Areté method v.4.0
+Tree risk and target assessment according to Arete method v.4.0
 
 STRUMENTO AD USO ESCLUSIVAMENTE DIDATTICO - NON OPERATIVO
  I risultati prodotti da questo simulatore non costituiscono e non sostituiscono una perizia o una valutazione tecnica professionale, un'indagine visiva diretta ne' alcun documento a valenza legale, assicurativa o amministrativa.
