@@ -1197,6 +1197,16 @@ class AreteGeneraCVdaOSMAlgorithm(QgsProcessingAlgorithm):
             return {}
 
         _configura_form_cv(lyr)
+
+        # Inizializza editing + indice spaziale (fix snap/selezione/salva)
+        if lyr.providerType() == "ogr":
+            lyr.startEditing()
+            lyr.commitChanges()
+            prov = lyr.dataProvider()
+            if prov:
+                prov.createSpatialIndex()
+            lyr.updateExtents()
+
         QgsProject.instance().addMapLayer(lyr)
 
         n = lyr.featureCount()

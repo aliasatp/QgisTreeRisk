@@ -128,6 +128,16 @@ class AreteCreaCVAlgorithm(QgsProcessingAlgorithm):
             return {}
 
         QgsProject.instance().addMapLayer(lyr)
+
+        # Inizializza editing + indice spaziale (fix snap/selezione/salva)
+        if lyr.providerType() == "ogr":
+            lyr.startEditing()
+            lyr.commitChanges()
+            prov = lyr.dataProvider()
+            if prov:
+                prov.createSpatialIndex()
+            lyr.updateExtents()
+
         feedback.pushInfo("OK - layer aggiunto al progetto QGIS.")
         feedback.pushInfo("")
         feedback.pushInfo("PROSSIMI PASSI:")

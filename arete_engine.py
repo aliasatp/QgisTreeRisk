@@ -74,6 +74,33 @@ from qgis.core import (
 )
 
 import math
+
+def _attiva_editing_layer(lyr):
+    """
+    Inizializza lo stack di editing e l'indice spaziale su un layer GeoPackage
+    appena creato. Senza questo passaggio QGIS non registra correttamente
+    le nuove geometrie: snap, selezione grafica e salva-modifiche non funzionano
+    fino al reload del progetto.
+
+    Il ciclo startEditing/commitChanges forza QGIS a:
+    - Registrare il layer nel sistema di editing
+    - Costruire l'indice spaziale interno
+    - Attivare i trigger rtree del GeoPackage
+    - Aggiornare le capabilities del provider
+    """
+    if not lyr or not lyr.isValid():
+        return
+    if lyr.providerType() != "ogr":
+        return
+    # Ciclo di editing vuoto: forza l'inizializzazione completa
+    lyr.startEditing()
+    lyr.commitChanges()
+    # Indice spaziale esplicito
+    prov = lyr.dataProvider()
+    if prov:
+        prov.createSpatialIndex()
+    lyr.updateExtents()
+
 import json
 import urllib.parse
 
@@ -899,7 +926,7 @@ def d_to_rischio(d):
     Usa confronto d*N >= 1 (invece di d >= 1/N) per evitare errori floating-point.
     """
     if d == 0.0:
-        return {"r": "Assente", "colore": "#f5f5f5",
+        return {"r": "Assente", "colore": "#ffffff",
                 "giudizio": "ASSENTE", "speditiva": "ASSENTE", "gr": 0}
     # (N, ratio, colore, giudizio, speditiva, gr) -- ordine decrescente di rischio
     _SOGLIE = [
@@ -963,7 +990,7 @@ def calc_rischio(B, CF, POF, molt=1):
     """
     # Assente: bersaglio non presente o cedimento escluso
     if B == 9 or POF == 9:
-        return {"r": "Assente", "colore": "#d0d0d0",
+        return {"r": "Assente", "colore": "#ffffff",
                 "giudizio": "RISCHIO ASSENTE",
                 "speditiva": "NESSUNA AZIONE NECESSARIA", "gr": 0}
 
@@ -1016,7 +1043,7 @@ def rischio_peggiore(*rischi):
     # Solo Assenti (gr=0)
     assenti = [r for r in rischi if r and r.get("gr") == 0]
     if assenti and len(assenti) == len([r for r in rischi if r]):
-        return {"r": "Assente", "colore": "#d0d0d0",
+        return {"r": "Assente", "colore": "#ffffff",
                 "giudizio": "RISCHIO ASSENTE",
                 "speditiva": "NESSUNA AZIONE NECESSARIA", "gr": 0}
 
@@ -1428,7 +1455,7 @@ _VRA_ALIASES = {
     "Ba_occupaz":  "B occupazione (albero)",
     "Ba_finale":   "B finale albero ★",
     "Ba_raggio_m": "Raggio SPOT (m)",
-    "Ba_strada":   "Strada rilevata",
+    "Ba_strada":   "Bersaglio rilevato",
     "Ba_vel_kmh":  "Velocità (km/h)",
     "Ba_vei_g":    "Veicoli/giorno",
     "Ba_ped_g":    "Pedoni/giorno",
@@ -1437,7 +1464,7 @@ _VRA_ALIASES = {
     "Bb_occupaz":  "B occupazione (branca)",
     "Bb_finale":   "B finale branca ★",
     "Bb_raggio_m": "Raggio area branca (m)",
-    "Bb_strada":   "Strada rilevata",
+    "Bb_strada":   "Bersaglio rilevato",
     "Bb_vel_kmh":  "Velocità (km/h)",
     "Bb_vei_g":    "Veicoli/giorno",
     "Bb_ped_g":    "Pedoni/giorno",
@@ -2249,6 +2276,9 @@ def crea_layer_cv(percorso_gpkg=None, crs=None):
         lyr = QgsVectorLayer("Polygon?crs=" + _crs_str, LAYER_NAME, "memory")
         lyr.dataProvider().addAttributes(list(qfields))
         lyr.updateFields()
+
+    # Inizializza editing + indice spaziale
+    _attiva_editing_layer(lyr)
 
     # ── Stile categorizzato per cv_tipo ────────────────────────────────
     try:

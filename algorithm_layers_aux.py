@@ -18,6 +18,33 @@ from qgis.core import (
 )
 from qgis.PyQt.QtCore import QVariant, QCoreApplication
 
+def _attiva_editing_layer(lyr):
+    """
+    Inizializza lo stack di editing e l'indice spaziale su un layer GeoPackage
+    appena creato. Senza questo passaggio QGIS non registra correttamente
+    le nuove geometrie: snap, selezione grafica e salva-modifiche non funzionano
+    fino al reload del progetto.
+
+    Il ciclo startEditing/commitChanges forza QGIS a:
+    - Registrare il layer nel sistema di editing
+    - Costruire l'indice spaziale interno
+    - Attivare i trigger rtree del GeoPackage
+    - Aggiornare le capabilities del provider
+    """
+    if not lyr or not lyr.isValid():
+        return
+    if lyr.providerType() != "ogr":
+        return
+    # Ciclo di editing vuoto: forza l'inizializzazione completa
+    lyr.startEditing()
+    lyr.commitChanges()
+    # Indice spaziale esplicito
+    prov = lyr.dataProvider()
+    if prov:
+        prov.createSpatialIndex()
+    lyr.updateExtents()
+
+
 
 # ============================================================================
 # HELPER: configura form attributi
@@ -128,6 +155,7 @@ def crea_layer_comuni(percorso_gpkg=None, crs=None):
         lyr.updateFields()
 
     _configura_form_comuni(lyr)
+    _attiva_editing_layer(lyr)
     return lyr, err_msg
 
 
@@ -265,6 +293,7 @@ def crea_layer_zonizzazione(percorso_gpkg=None, crs=None):
         lyr.updateFields()
 
     _configura_form_zonizzazione(lyr)
+    _attiva_editing_layer(lyr)
     return lyr, err_msg
 
 

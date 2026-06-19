@@ -3,7 +3,7 @@ name=QgisTreeRisk
 qgisMinimumVersion=3.22
 qgisMaximumVersion=4.99
 description=Valutazione Rischio Arboreo - Tree risk assessment
-version=0.3
+version=0.4
 author=ALIAS ATP
 email=alias@aliasinfo.it
 about=VALUTATORE DEL RISCHIO ARBOREO E DEL BERSAGLIO SECONDO IL METODO ARETE' v.4.0
@@ -27,3 +27,22 @@ icon=icon.png
 experimental=False
 deprecated=False
 hasProcessingProvider=True
+
+changelog=0.4
+ - Fix: i layer poligonali (CV, Comuni, Zonizzazione) ora inizializzano
+   correttamente lo stack di editing di QGIS tramite un ciclo
+   startEditing/commitChanges alla creazione
+ - Fix: indice spaziale creato esplicitamente dopo il primo commit,
+   risolvendo i problemi di selezione grafica, snap e modifica vertici
+   sulle geometrie appena aggiunte
+ - Fix: pulsante "Salva modifiche vettore" ora si attiva correttamente
+   durante l'editing dei layer creati dal plugin
+ - Metadata aggiornato a v0.4 con changelog
+ .
+ 0.3
+ - Prima versione pubblica su GitHub e plugins.qgis.org
+ - 5 algoritmi Processing: VRA, Crea CV, CV da OSM, Comuni, Zonizzazione
+ - Metodo geometrico SPOT/SDAN per occupazione stabile
+ - Fattore k demografico con 9 fasce (XXS-XXL)
+ - Layer SPOT con area di potenziale caduta
+ - Supporto QGIS 3.22 - 4.x
