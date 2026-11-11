@@ -1913,7 +1913,7 @@ def _configura_form_cv(lyr):
         from qgis.PyQt.QtCore import Qt
 
         cfg = lyr.editFormConfig()
-        cfg.setLayout(QgsEditFormConfig.TabLayout)
+        cfg.setLayout(QgsEditFormConfig.EditorLayout.TabLayout)
 
         # ── Helper: indice campo per nome ──────────────────────────────
         def fi(nome):
@@ -2235,7 +2235,7 @@ def crea_layer_cv(percorso_gpkg=None, crs=None):
         if isinstance(error_code, tuple):
             error_code, error_msg = error_code
 
-        if error_code != QgsVectorLayerExporter.NoError:
+        if error_code != QgsVectorLayerExporter.ExportError.NoError:
             # Fallback: prova con writeAsVectorFormatV3 se disponibile
             try:
                 from qgis.core import QgsVectorFileWriter
@@ -2244,7 +2244,7 @@ def crea_layer_cv(percorso_gpkg=None, crs=None):
                 opts.layerName     = LAYER_NAME
                 opts.fileEncoding  = "UTF-8"
                 opts.actionOnExistingFile = (
-                    QgsVectorFileWriter.CreateOrOverwriteFile
+                    QgsVectorFileWriter.ActionOnExistingFile.CreateOrOverwriteFile
                 )
                 tmp_lyr = QgsVectorLayer(
                     "Polygon?crs=" + _crs_str, LAYER_NAME, "memory"
@@ -2255,7 +2255,7 @@ def crea_layer_cv(percorso_gpkg=None, crs=None):
                     tmp_lyr, gpkg, tmp_lyr.transformContext(), opts
                 )
                 fb_code = res[0] if isinstance(res, tuple) else res
-                if fb_code != QgsVectorFileWriter.NoError:
+                if fb_code != QgsVectorFileWriter.WriterError.NoError:
                     return None, (
                         "Impossibile creare il GeoPackage.\n"
                         "Errore esportazione: " + str(fb_code) + "\n"
@@ -2826,7 +2826,7 @@ def crea_layer_spot(vra_layer, nome="VRA_SPOT"):
         # con opacità 60% (99 in HEX → ~153/255 = 60%)
         fill_layer = sym.symbolLayer(0)
         fill_layer.setDataDefinedProperty(
-            QgsSymbolLayer.PropertyFillColor,
+            QgsSymbolLayer.Property.PropertyFillColor,
             QgsProperty.fromExpression(
                 "color_rgba("
                 "  color_part(\"R_colore\", 'red'),"

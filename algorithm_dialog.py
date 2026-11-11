@@ -64,8 +64,8 @@ class AreteVRADialogAlgorithm(QgsProcessingAlgorithm):
         # Esegue direttamente il codice senza dialog parametri
         return (
             super().flags()
-            | QgsProcessingAlgorithm.FlagNoThreading
-            | QgsProcessingAlgorithm.FlagNotAvailableInStandaloneTool
+            | QgsProcessingAlgorithm.Flag.FlagNoThreading
+            | QgsProcessingAlgorithm.Flag.FlagNotAvailableInStandaloneTool
         )
 
     def processAlgorithm(self, parameters, context, feedback):

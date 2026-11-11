@@ -251,7 +251,7 @@ class VRADialog(QDialog):
             "Valutazione del Rischio Arboreo - VRA</b><br>"
             "<small>ALBERO raggio=altezza | BRANCA raggio=raggio chioma</small>"
         )
-        hdr.setAlignment(Qt.AlignmentFlag.AlignCenter if hasattr(Qt, 'AlignmentFlag') else Qt.AlignCenter)
+        hdr.setAlignment(Qt.AlignmentFlag.AlignCenter)
         root.addWidget(hdr)
 
         self._tabs = QTabWidget()
@@ -282,10 +282,7 @@ class VRADialog(QDialog):
         g_lay = QGroupBox("Layer alberi (punti)")
         fl    = QFormLayout(g_lay)
         self.lyr_combo = QgsMapLayerComboBox()
-        try:
-            self.lyr_combo.setFilters(QgsMapLayerProxyModel.Filter.PointLayer)
-        except AttributeError:
-            self.lyr_combo.setFilters(QgsMapLayerProxyModel.PointLayer)
+        self.lyr_combo.setFilters(QgsMapLayerProxyModel.Filter.PointLayer)
         self.lyr_combo.layerChanged.connect(self._aggiorna_campi)
         fl.addRow("Layer alberi:", self.lyr_combo)
         self.lbl_stato = QLabel(
@@ -321,10 +318,7 @@ class VRADialog(QDialog):
         lw = QFormLayout(self._w_cv)
         lw.setContentsMargins(20, 4, 0, 4)
         self.cv_combo = QgsMapLayerComboBox()
-        try:
-            self.cv_combo.setFilters(QgsMapLayerProxyModel.Filter.PolygonLayer)
-        except AttributeError:
-            self.cv_combo.setFilters(QgsMapLayerProxyModel.PolygonLayer)
+        self.cv_combo.setFilters(QgsMapLayerProxyModel.Filter.PolygonLayer)
         self.cv_combo.setAllowEmptyLayer(True)
         lw.addRow("Layer CV:", self.cv_combo)
         lw.addRow(QLabel(
