@@ -3,7 +3,7 @@ name=QgisTreeRisk
 qgisMinimumVersion=3.22
 qgisMaximumVersion=4.99
 description=Valutazione Rischio Arboreo - Tree risk assessment
-version=0.4
+version=0.4.1
 author=ALIAS ATP
 email=alias@aliasinfo.it
 about=VALUTATORE DEL RISCHIO ARBOREO E DEL BERSAGLIO SECONDO IL METODO ARETE' v.4.0
@@ -28,7 +28,9 @@ experimental=False
 deprecated=False
 hasProcessingProvider=True
 
-changelog=0.4
+changelog=0.4.1
+ - Occupazione flat: soglie di classe allineate alla Tab A3.4 del Protocollo v4.0 (B1 5 h/g, B2 29 min/g, B3 3 min/g, B4 2 min/settimana, B5 0,9 min/mese, B6 1 min/anno). Prima B2 e B4-B6 non corrispondevano alla tabella
+ 0.4
  - Fix: i layer poligonali (CV, Comuni, Zonizzazione) ora inizializzano
    correttamente lo stack di editing di QGIS tramite un ciclo
    startEditing/commitChanges alla creazione

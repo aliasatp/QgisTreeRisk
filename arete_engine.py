@@ -857,15 +857,27 @@ def classe_B_da_soglie(n_giorno, soglie):
     return 7
 
 
+# Tab A3.4 (Protocollo Arete v4.0): occupazione stabile di persone, tempo di
+# permanenza nell'area esposta riferito a una persona. Soglie inferiori di
+# classe come stampate in tabella, convertite in ore/giorno
+# (settimana = 7 g, mese = 365/12 g, anno = 365 g).
+SOGLIE_OCC_FLAT = (
+    5.0,                          # B1  5 ore/giorno
+    29.0 / 60.0,                  # B2  29 minuti/giorno      (0.4833 h/g)
+    3.0 / 60.0,                   # B3  3 minuti/giorno       (0.05 h/g)
+    2.0 / 60.0 / 7.0,             # B4  2 minuti/settimana    (0.004762 h/g)
+    0.9 / 60.0 / (365.0 / 12.0),  # B5  0,9 minuti/mese       (0.000493 h/g)
+    1.0 / 60.0 / 365.0,           # B6  1 minuto/anno         (0.0000457 h/g)
+)
+
+
 def classe_B_occupazione(ore_giorno):
-    """Classe Bersaglio da occupazione stabile (Tab A3.4)."""
-    if ore_giorno <= 0:        return 7
-    if ore_giorno >= 5.0:      return 1
-    if ore_giorno >= 0.5:      return 2
-    if ore_giorno >= 0.05:     return 3
-    if ore_giorno >= 0.0333:   return 4
-    if ore_giorno >= 8.33e-4:  return 5
-    if ore_giorno >= 1.67e-5:  return 6
+    """Classe Bersaglio da occupazione stabile, metodo flat (Tab A3.4)."""
+    if ore_giorno is None or ore_giorno <= 0:
+        return 7
+    for i, soglia in enumerate(SOGLIE_OCC_FLAT, start=1):
+        if ore_giorno >= soglia:
+            return i
     return 7
 
 

@@ -673,7 +673,7 @@ Supporta il fattore demografico k (popolazione, turismo, zonizzazione).</li>
 <div class="note">
 <b>Metodo di calcolo B occupazione:</b><br>
 • <b>Geometrico</b> (default per tipo occupazione): proporziona l'occupazione alla SPOT/SDAN — consigliato per aree estese (parchi, pertinenze).<br>
-• <b>Flat</b>: usa cv_ore_flat direttamente — per aree piccole o dato già elaborato.
+• <b>Flat</b>: usa cv_ore_flat direttamente — per aree piccole o dato già elaborato.<br>  Soglie Tab A3.4: B1 5 h/g · B2 29 min/g · B3 3 min/g · B4 2 min/settimana · B5 0,9 min/mese · B6 1 min/anno.
 </div>
 
 <h2>Riferimenti</h2>
