@@ -74,48 +74,48 @@ class AreteVRABatchAlgorithm(QgsProcessingAlgorithm):
     def initAlgorithm(self, config=None):
         self.addParameter(QgsProcessingParameterVectorLayer(
             self.INPUT, "Layer alberi (punti)",
-            types=[QgsProcessing.SourceType.TypeVectorPoint]
+            types=[QgsProcessing.TypeVectorPoint]
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.H, "Altezza albero default - campo: h (m)",
             defaultValue=12.0, minValue=0.1,
-            type=QgsProcessingParameterNumber.Type.Double
+            type=QgsProcessingParameterNumber.Double
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.D_CH, "Diametro chioma default - campo: d_ch (m)",
             defaultValue=6.0, minValue=0.1,
-            type=QgsProcessingParameterNumber.Type.Double
+            type=QgsProcessingParameterNumber.Double
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.CIRCONF, "Circonferenza tronco default - campo: circonf (cm)",
             defaultValue=80.0, minValue=1.0,
-            type=QgsProcessingParameterNumber.Type.Double
+            type=QgsProcessingParameterNumber.Double
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.H_BERS, "Altezza bersaglio default - campo: h_bers (m)",
             defaultValue=1.8, minValue=0.0,
-            type=QgsProcessingParameterNumber.Type.Double
+            type=QgsProcessingParameterNumber.Double
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.D_BR, "Diametro branca default - campo: d_br (cm)",
             defaultValue=10.0, minValue=0.1,
-            type=QgsProcessingParameterNumber.Type.Double
+            type=QgsProcessingParameterNumber.Double
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.L_BR, "Lunghezza branca default - campo: l_br (m)",
             defaultValue=3.0, minValue=0.1,
-            type=QgsProcessingParameterNumber.Type.Double
+            type=QgsProcessingParameterNumber.Double
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.H_INS, "Inserzione branca default - campo: h_ins (m)",
             defaultValue=6.0, minValue=0.0,
-            type=QgsProcessingParameterNumber.Type.Double
+            type=QgsProcessingParameterNumber.Double
         ))
         self.addParameter(QgsProcessingParameterNumber(
             self.B_MAN,
             "Classe Bersaglio globale (0=da OSM, 1-7=manuale, 9=assente)",
             defaultValue=0, minValue=0, maxValue=9,
-            type=QgsProcessingParameterNumber.Type.Integer
+            type=QgsProcessingParameterNumber.Integer
         ))
         self.addParameter(QgsProcessingParameterFeatureSink(
             self.OUTPUT, "VRA Arete - risultati"
@@ -154,7 +154,7 @@ class AreteVRABatchAlgorithm(QgsProcessingAlgorithm):
 
         (sink, dest_id) = self.parameterAsSink(
             parameters, self.OUTPUT, context,
-            out_qgs_fields, QgsWkbTypes.Type.Point, crs_src
+            out_qgs_fields, QgsWkbTypes.Point, crs_src
         )
 
         fnames = [f.name() for f in existing_fields]

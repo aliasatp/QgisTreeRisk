@@ -251,7 +251,7 @@ class VRADialog(QDialog):
             "Valutazione del Rischio Arboreo - VRA</b><br>"
             "<small>ALBERO raggio=altezza | BRANCA raggio=raggio chioma</small>"
         )
-        hdr.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        hdr.setAlignment(Qt.AlignmentFlag.AlignCenter if hasattr(Qt, 'AlignmentFlag') else Qt.AlignCenter)
         root.addWidget(hdr)
 
         self._tabs = QTabWidget()
@@ -282,7 +282,10 @@ class VRADialog(QDialog):
         g_lay = QGroupBox("Layer alberi (punti)")
         fl    = QFormLayout(g_lay)
         self.lyr_combo = QgsMapLayerComboBox()
-        self.lyr_combo.setFilters(QgsMapLayerProxyModel.Filter.PointLayer)
+        try:
+            self.lyr_combo.setFilters(QgsMapLayerProxyModel.Filter.PointLayer)
+        except AttributeError:
+            self.lyr_combo.setFilters(QgsMapLayerProxyModel.PointLayer)
         self.lyr_combo.layerChanged.connect(self._aggiorna_campi)
         fl.addRow("Layer alberi:", self.lyr_combo)
         self.lbl_stato = QLabel(
@@ -318,7 +321,10 @@ class VRADialog(QDialog):
         lw = QFormLayout(self._w_cv)
         lw.setContentsMargins(20, 4, 0, 4)
         self.cv_combo = QgsMapLayerComboBox()
-        self.cv_combo.setFilters(QgsMapLayerProxyModel.Filter.PolygonLayer)
+        try:
+            self.cv_combo.setFilters(QgsMapLayerProxyModel.Filter.PolygonLayer)
+        except AttributeError:
+            self.cv_combo.setFilters(QgsMapLayerProxyModel.PolygonLayer)
         self.cv_combo.setAllowEmptyLayer(True)
         lw.addRow("Layer CV:", self.cv_combo)
         lw.addRow(QLabel(
@@ -667,7 +673,7 @@ Supporta il fattore demografico k (popolazione, turismo, zonizzazione).</li>
 <div class="note">
 <b>Metodo di calcolo B occupazione:</b><br>
 • <b>Geometrico</b> (default per tipo occupazione): proporziona l'occupazione alla SPOT/SDAN — consigliato per aree estese (parchi, pertinenze).<br>
-• <b>Flat</b>: usa cv_ore_flat direttamente — per aree piccole o dato già elaborato.<br>  Soglie Tab A3.4: B1 5 h/g · B2 29 min/g · B3 3 min/g · B4 2 min/settimana · B5 0,9 min/mese · B6 1 min/anno.
+• <b>Flat</b>: usa cv_ore_flat direttamente — per aree piccole o dato già elaborato.
 </div>
 
 <h2>Riferimenti</h2>

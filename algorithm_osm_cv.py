@@ -883,7 +883,7 @@ class AreteGeneraCVdaOSMAlgorithm(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 self.ABITANTI,
                 "Abitanti del comune (se sorgente = manuale)",
-                type=QgsProcessingParameterNumber.Type.Integer,
+                type=QgsProcessingParameterNumber.Integer,
                 defaultValue=50000,
                 minValue=0,
                 optional=True,
@@ -1144,13 +1144,13 @@ class AreteGeneraCVdaOSMAlgorithm(QgsProcessingAlgorithm):
             opts.layerName    = LAYER_NAME
             opts.fileEncoding = "UTF-8"
             opts.actionOnExistingFile = (
-                QgsVectorFileWriter.ActionOnExistingFile.CreateOrOverwriteFile
+                QgsVectorFileWriter.CreateOrOverwriteFile
             )
             res = QgsVectorFileWriter.writeAsVectorFormatV3(
                 lyr_mem, gpkg, lyr_mem.transformContext(), opts
             )
             code = res[0] if isinstance(res, tuple) else res
-            if code == QgsVectorFileWriter.WriterError.NoError:
+            if code == QgsVectorFileWriter.NoError:
                 saved = True
             else:
                 save_err = f"writeAsVectorFormatV3 code={code}"
@@ -1170,7 +1170,7 @@ class AreteGeneraCVdaOSMAlgorithm(QgsProcessingAlgorithm):
                 )
                 if isinstance(code2, tuple):
                     code2, msg2 = code2
-                if code2 == QgsVectorLayerExporter.ExportError.NoError:
+                if code2 == QgsVectorLayerExporter.NoError:
                     saved = True
                 else:
                     save_err += f" | Exporter code={code2} {msg2}"
